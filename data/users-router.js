@@ -42,6 +42,21 @@ router.get('/:id', (req,res)=>{
     })
     })
 
+    router.get('/posts/:id', (req,res)=>{
+        db
+        .getById(req.params.id)
+        .then(user =>{
+            if (user>0){
+                res.status(200).json(user)
+        }else{
+        res.status(404).json({message: "The user with the specified ID either does not exist or has no posts at this time."})
+        }
+        })
+        .catch(err=>{
+            res.status(500).json({error:err, message:"Those posts could not be retrieved."})
+        })
+        })
+
     router.put('/:id',(req,res) =>{
         const updatedPost=req.body
         if (!updatedPost.name){
