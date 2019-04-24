@@ -4,7 +4,13 @@ const db=require('./helpers/userDb.js')
 
 const router= express.Router()
 
-router.post('/',(req,res)=>{
+
+function bodyToCaps(req,res,next) {
+        req.body.name=req.body.name.toUpperCase();
+        next();
+  };
+
+router.post('/', bodyToCaps,(req,res)=>{
     const newUser=req.body
     db
     .insert(newUser)
@@ -57,7 +63,7 @@ router.get('/:id', (req,res)=>{
         })
         })
 
-    router.put('/:id',(req,res) =>{
+    router.put('/:id', bodyToCaps,(req,res) =>{
         const updatedPost=req.body
         if (!updatedPost.name){
             res.status(400).json({message:"Please provide a name for the user."})
