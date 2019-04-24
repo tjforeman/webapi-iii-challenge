@@ -4,6 +4,18 @@ const db=require('./helpers/userDb.js')
 
 const router= express.Router()
 
+router.post('/',(req,res)=>{
+    const newUser=req.body
+    db
+    .insert(newUser)
+    .then(user =>{
+        res.status(200).json(user)
+    })
+    .catch(err=>{
+        res.status(500).json({error:err, message:"The user could not be added."})
+    })
+})
+
 router.get('/', (req,res)=>{
     db
     .get()

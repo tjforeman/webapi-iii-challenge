@@ -6,6 +6,8 @@ const postsRouter = require('./data/posts-router.js');
 const server=express()
 
 
+
+
 server.use(express.json());
 
 

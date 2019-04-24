@@ -4,6 +4,18 @@ const db=require('./helpers/postDb.js')
 
 const router= express.Router()
 
+router.post('/',(req,res)=>{
+    const newPost=req.body
+    db
+    .insert(newPost)
+    .then(post =>{
+        res.status(200).json(post)
+    })
+    .catch(err=>{
+        res.status(500).json({error:err, message:"The post could not be added."})
+    })
+})
+
 router.get('/', (req,res)=>{
     db
     .get()
