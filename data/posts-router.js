@@ -41,6 +41,26 @@ res.status(404).json({message: "The post with the specified ID does not exist."}
 })
 })
 
+router.put('/:id',(req,res) =>{
+    const updatedPost=req.body
+    if (!updatedPost.text || !updatedPost.user_id){
+        res.status(400).json({message:"Please provide text and user id for the post."})
+    }else{
+    db
+    .update(req.params.id,updatedPost)
+    .then(post=>{
+    if(!post){
+        res.status(404).json({message:"The post with the specified ID does not exist."})
+    }else{
+        res.status(201).json(post)
+    }
+    })
+    .catch(err=>{
+        res.status(500).json({ error: "The post information could not be modified."})
+    })
+    }
+     })
+
 router.delete('/:id', (req,res)=>{
     db
     .remove(req.params.id)

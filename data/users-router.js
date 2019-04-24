@@ -42,6 +42,26 @@ router.get('/:id', (req,res)=>{
     })
     })
 
+    router.put('/:id',(req,res) =>{
+        const updatedPost=req.body
+        if (!updatedPost.name){
+            res.status(400).json({message:"Please provide a name for the user."})
+        }else{
+        db
+        .update(req.params.id,updatedPost)
+        .then(post=>{
+        if(!post){
+            res.status(404).json({message:"The user with the specified ID does not exist."})
+        }else{
+            res.status(201).json(post)
+        }
+        })
+        .catch(err=>{
+            res.status(500).json({ error: "The user information could not be modified."})
+        })
+        }
+         })
+
     router.delete('/:id', (req,res)=>{
         db
         .remove(req.params.id)
