@@ -50,9 +50,9 @@ router.get('/:id', (req,res)=>{
 
     router.get('/posts/:id', (req,res)=>{
         db
-        .getById(req.params.id)
+        .getUserPosts(req.params.id)
         .then(user =>{
-            if (user>0){
+            if (user.length>0){
                 res.status(200).json(user)
         }else{
         res.status(404).json({message: "The user with the specified ID either does not exist or has no posts at this time."})
